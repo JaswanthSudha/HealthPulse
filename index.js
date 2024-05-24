@@ -20,36 +20,37 @@ app.use(express.urlencoded({ extended: false }))
 app.get("/", (req, res) => {
     res.json("homepage")
 })
-app.post("/upload", upload.single('profileImage'), createReport)
+app.post("/upload", upload.single('profileImage'), async (req, res) => {
 
-// console.log(req.body)
-// console.log(req.file);
-// try {
-// ml model api
-// const response = await fetch("http://127.0.0.1:5000/getReport", {
-//     method: "POST",
-//     headers: {
-//         "Content-Type": "application/json"
-//     }
-//     , body: JSON.stringify({ "location": req.file.path })
-// })
-// const json = await response.json()
-// console.log(json.report)e
-// req.value = json.report;
-//         const reportCreated = await fetch("http://localhost:8000/api/report", {
-//             method: "POST",
-//             headers: {
-//                 "Content-Type": "application/json",
+    console.log(req.body)
+    console.log(req.file);
+    try {
+        // ml model api
+        // const response = await fetch("http://127.0.0.1:5000/getReport", {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json"
+        //     }
+        //     , body: JSON.stringify({ "location": req.file.path })
+        // })
+        // const json = await response.json()
+        // console.log(json.report)
+        // req.value = json.report;
+        // const reportCreated = await fetch("http://localhost:8000/api/report", {
+        //     method: "POST",
+        //     headers: {
+        //         "Content-Type": "application/json",
 
-//             },
-//             body: JSON.stringify({ value: "Not Malnutrioned", longtitude: req.body.longtitude, latitude: req.body.latitude, })
-//         })
-//         res.status(200).json(reportCreated);
-//     }
-//     catch (error) {
-//         res.status(500).json(error)
-//     }
-// })
+        //     },
+        //     body: JSON.stringify({ value: "Not Malnutrioned", longtitude: req.body.longtitude, latitude: req.body.latitude, })
+        // })
+        // res.status(200).json(reportCreated);
+        createReport()
+    }
+    catch (error) {
+        res.status(500).json(error)
+    }
+})
 mongoose.connect(process.env.STRING)
     .then(() => {
         console.log("Database Loaded")
