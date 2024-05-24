@@ -1,5 +1,4 @@
 require("dotenv").config()
-const { render } = require("ejs")
 const express = require("express")
 const app = express()
 const multer = require("multer")
@@ -8,8 +7,6 @@ const PORT = 8000
 const mongoose = require("mongoose")
 const reportRoutes = require("./routes/report")
 const { createReport } = require("./controllers/report")
-app.set("view engine", "ejs")
-app.set("views", path.resolve("./views"))
 app.use(express.json())
 app.use("/api/report", reportRoutes)
 const storage = multer.diskStorage({
@@ -19,7 +16,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage })
 app.use(express.urlencoded({ extended: false }))
 app.get("/", (req, res) => {
-    return res.render("homepage")
+    res.json("homepage")
 })
 app.post("/upload", upload.single('profileImage'), createReport)
 
