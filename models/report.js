@@ -7,6 +7,10 @@ const reportSchema = new mongoose.Schema({
     address: {
         type: String,
         require: true
+    },
+    user_id: {
+        type: String,
+        require: true
     }
 
 }, { timestamps: true })

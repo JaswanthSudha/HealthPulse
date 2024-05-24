@@ -7,7 +7,7 @@ const path = require("path")
 const PORT = 8000
 const mongoose = require("mongoose")
 const reportRoutes = require("./routes/report")
-
+const { createReport } = require("./controllers/report")
 app.set("view engine", "ejs")
 app.set("views", path.resolve("./views"))
 app.use(express.json())
@@ -21,39 +21,36 @@ app.use(express.urlencoded({ extended: false }))
 app.get("/", (req, res) => {
     return res.render("homepage")
 })
-app.post("/upload", upload.single('profileImage'), async (req, res) => {
-    // console.log(req.body)
-    // console.log(req.file);
-    try {
-        const response = await fetch("http://127.0.0.1:5000/getReport", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            }
-            , body: JSON.stringify({ "location": req.file.path })
-        })
-        const json = await response.json()
-        // console.log(json.report)e
-        // req.value = json.report;
-        const reportCreated = await fetch("http://localhost:8000/api/report", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
+app.post("/upload", upload.single('profileImage'), createReport)
 
-            },
-            body: JSON.stringify({ value: json.report })
-        })
-        // console.log(reportCreated);
+// console.log(req.body)
+// console.log(req.file);
+// try {
+// ml model api
+// const response = await fetch("http://127.0.0.1:5000/getReport", {
+//     method: "POST",
+//     headers: {
+//         "Content-Type": "application/json"
+//     }
+//     , body: JSON.stringify({ "location": req.file.path })
+// })
+// const json = await response.json()
+// console.log(json.report)e
+// req.value = json.report;
+//         const reportCreated = await fetch("http://localhost:8000/api/report", {
+//             method: "POST",
+//             headers: {
+//                 "Content-Type": "application/json",
 
-        // res.status(200).json(json)
-        // console.log("FlaskResponse", json)
-        return res.redirect("/")
-    }
-    catch (error) {
-        console.log(error)
-        return res.redirect("/")
-    }
-})
+//             },
+//             body: JSON.stringify({ value: "Not Malnutrioned", longtitude: req.body.longtitude, latitude: req.body.latitude, })
+//         })
+//         res.status(200).json(reportCreated);
+//     }
+//     catch (error) {
+//         res.status(500).json(error)
+//     }
+// })
 mongoose.connect(process.env.STRING)
     .then(() => {
         console.log("Database Loaded")
