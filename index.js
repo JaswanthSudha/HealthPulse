@@ -4,9 +4,11 @@ const app = express()
 const multer = require("multer")
 const path = require("path")
 const PORT = 8000
+const cors = require("cors")
 const mongoose = require("mongoose")
 const reportRoutes = require("./routes/report")
 const { createReport } = require("./controllers/report")
+app.use(cors())
 app.use(express.json())
 app.use("/api/report", reportRoutes)
 const storage = multer.diskStorage({
