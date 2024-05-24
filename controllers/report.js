@@ -3,6 +3,7 @@ const createReport = async (req, res) => {
     try {
         // 22.288538130810007 73.36282475774387 wagodia's
         const { latitude, longtitude } = req.body
+        const user_id = 1
         const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longtitude}`;
         const address = await fetch(url, {
             headers: {
@@ -10,7 +11,7 @@ const createReport = async (req, res) => {
             }
         })
         const addressjson = await address.json()
-        const report = await reportModel.create({ value: "Not Malnutrioned", address: addressjson.address.county })
+        const report = await reportModel.create({ value: "Not Malnutrioned", address: addressjson.address.county, user_id })
         res.status(200).json(report)
 
     }
