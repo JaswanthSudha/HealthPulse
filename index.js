@@ -25,19 +25,19 @@ app.post("/upload", upload.single("profile"), async (req, res) => {
     try {
         if (req.file) {
             console.log(req.file);
-            const { longtitude, latitude } = req.body
-            const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longtitude}`;
-            const address = await fetch(url, {
-                headers: {
-                    'User-Agent': 'JaswanthSudha (jaswanthsudha2021@gmail.com)'
-                }
-            })
-            if (!address) {
-                throw new Error("Address Not Found")
-            }
-            const addressjson = await address.json()
-            console.log(addressjson);
-            const report = await reportModel.create({ value: "Not Malnutrioned", address: addressjson.address.county, user_id: 1 })
+            // const { longtitude, latitude } = req.body
+            // const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longtitude}`;
+            // const address = await fetch(url, {
+            //     headers: {
+            //         'User-Agent': 'JaswanthSudha (jaswanthsudha2021@gmail.com)'
+            //     }
+            // })
+            // if (!address) {
+            //     throw new Error("Address Not Found")
+            // }
+            // const addressjson = await address.json()
+            // console.log(addressjson);
+            const report = await reportModel.create({ value: "Not Malnutrioned", address: "addressjson.address.county", user_id: 1 })
             if (!report) {
                 throw new Error("Report Not Created")
             }
