@@ -10,8 +10,14 @@ const createReport = async (req, res) => {
                 'User-Agent': 'JaswanthSudha (jaswanthsudha2021@gmail.com)'
             }
         })
+        if (!address) {
+            throw new Error("AddressNotFound")
+        }
         const addressjson = await address.json()
         const report = await reportModel.create({ value: "Not Malnutrioned", address: addressjson.address.county, user_id })
+        if (!report) {
+            throw new Error("Report Not Created")
+        }
         res.status(200).json(report)
 
     }

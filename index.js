@@ -7,6 +7,7 @@ const PORT = 8000
 const cors = require("cors")
 const mongoose = require("mongoose")
 const reportRoutes = require("./routes/report")
+const reportModel = require("./models/report")
 const { createReport } = require("./controllers/report")
 app.use(cors())
 app.use(express.json())
@@ -22,32 +23,11 @@ app.get("/", (req, res) => {
 })
 app.post("/upload", upload.single('profileImage'), async (req, res) => {
 
-    console.log(req.body)
-    console.log(req.file);
     try {
-        // ml model api
-        // const response = await fetch("http://127.0.0.1:5000/getReport", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     }
-        //     , body: JSON.stringify({ "location": req.file.path })
-        // })
-        // const json = await response.json()
-        // console.log(json.report)
-        // req.value = json.report;
-        // const reportCreated = await fetch("http://localhost:8000/api/report", {
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json",
-
-        //     },
-        //     body: JSON.stringify({ value: "Not Malnutrioned", longtitude: req.body.longtitude, latitude: req.body.latitude, })
-        // })
-        // res.status(200).json(reportCreated);
-        createReport()
+        await createReport(req, res)
     }
     catch (error) {
+        console.log(error);
         res.status(500).json(error)
     }
 })
