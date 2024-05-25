@@ -22,6 +22,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage })
 app.post("/upload", upload.single("profile"), async (req, res) => {
     try {
+        console.log(req.file);
         if (req.file) {
             await createReport(req, res)
         }
