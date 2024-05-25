@@ -11,9 +11,10 @@ const reportModel = require("./models/report")
 const { createReport } = require("./controllers/report")
 app.use(cors())
 app.use(express.json())
+app.use('/uploads', express.static('uploads'));
 app.use("/api/report", reportRoutes)
 const storage = multer.diskStorage({
-    destination: (req, file, cb) => cb(null, "uploads"),
+    destination: (req, file, cb) => cb(null, "uploads/"),
     filename: (req, file, cb) => cb(null, `${Date.now()}-${file.originalname}`),
 })
 const upload = multer({ storage })
